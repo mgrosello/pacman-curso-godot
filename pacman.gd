@@ -17,9 +17,9 @@ var moving = false
 @onready var color_rect4 = get_node("/root/Juego/ColorRect4")
 @onready var color_rect5 = get_node("/root/Juego/ColorRect5")
 @onready var color_rect6 = get_node("/root/Juego/ColorRect6")
-@onready var siren_1Sound =get_node("/root/Juego/Siren_1Sound") 
-@onready var munch_1Sound =get_node("/root/Juego/Munch_1Sound") 
-@onready var munch_2Sound =get_node("/root/Juego/Munch_2Sound") 
+@onready var siren_1Sound = get_node("/root/Juego/Siren_1Sound") 
+@onready var munch_1Sound = get_node("/root/Juego/Munch_1Sound") 
+@onready var munch_2Sound = get_node("/root/Juego/Munch_2Sound") 
 
 func _ready():
 	anim_sprite.play("idle")	
@@ -81,6 +81,12 @@ func move_to_next_tile(delta):
 			position = next_position
 	else:
 		position = next_position
+	
+	# Movimiento a través del túnel
+	if position.x < 8:
+		position.x = 220
+	elif position.x >= 220:
+		position.x = 8
 		
 func cell_id_from_pos(pos: Vector2):
 	var cell_coords = tile_map.local_to_map(tile_map.to_local(pos))
