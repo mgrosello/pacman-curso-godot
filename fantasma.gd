@@ -4,34 +4,68 @@ var speed = 60  # Velocidad de Pac-Man
 var direction = Vector2()  
 var next_tile_position = Vector2()
 
-var directions = [
-  Vector2(0, -1), # Arriba
-  Vector2(0, 1),  # Abajo
-  Vector2(-1, 0), # Izquierda
-  Vector2(1, 0)   # Derecha
-]
 
 @onready var anim_sprite = $Sprite2D/AnimationPlayer
 @onready var tile_map = get_node("/root/Juego/TileMap")
 @onready var tile_size = Vector2(tile_map.tile_set.tile_size)
 
+@export var color = 0
+@export var moving = true
+
 func _ready():
 	direction = Vector2(-1, 0)
 	next_tile_position = position + direction * tile_size
-
+	
+func _draw():
+	$Sprite2D.frame_coords.y = color		
+	
 func _process(delta):
-	move_to_next_tile(delta)
+	if moving:
+		move_to_next_tile(delta)
+	else:
+		handle_movement()
+	$Sprite2D.frame_coords.y = color
+	
+func handle_movement():
+	var random_index = randi() % 4
+	var input_direction = Vector2()
+
+	if random_index == 0:
+		input_direction.x = 1
+	elif random_index == 1:
+		input_direction.x = -1
+	elif random_index == 2:
+		input_direction.y = 1
+	elif random_index == 3:
+		input_direction.y = -1
+
+
+	if input_direction.length() > 0:
+		var candidate_next_tile_position = position + input_direction * tile_size
+#		highlight_cell(color_rect1, candidate_next_tile_position)	
+		if !is_wall(candidate_next_tile_position):
+			# cuando se gira, corregir la posición para que siempre entre por el mismo punto
+			if direction != input_direction:
+					position.x = int(position.x / 8) * 8 + 4
+					position.y = int(position.y / 8) * 8 + 4
+			moving = true
+			direction = input_direction.normalized()
+			next_tile_position = candidate_next_tile_position
+			#print("position ", position); 
+
+	update_animation()
 	
 func move_to_next_tile(delta):
 	var next_position = position + direction * speed * delta
 	var distance_to_next_tile = next_tile_position - position
+#	print("distance_to_next_tile", distance_to_next_tile)	
 	if distance_to_next_tile.length() <= speed * (delta + 1):
 		next_tile_position = position + direction * tile_size * 0.5
+
 		if (is_wall(next_position) || is_wall(next_tile_position)):
-			# Elige una dirección aleatoria.
-			var random_index = randi() % directions.size()
-			direction = directions[random_index]
+			moving = false
 		else:
+			moving = true
 			position = next_position
 	else:
 		position = next_position
@@ -41,8 +75,6 @@ func move_to_next_tile(delta):
 		position.x = 220
 	elif position.x >= 220:
 		position.x = 8
-		
-	update_animation()
 		
 func cell_id_from_pos(pos: Vector2):
 	var cell_coords = tile_map.local_to_map(tile_map.to_local(pos))
@@ -57,6 +89,8 @@ func is_wall(pos: Vector2):
 		return false
 	else:		
 		return true
+		
+		
 
 # Función para actualizar la animación basada en la dirección
 func update_animation():
@@ -68,3 +102,5 @@ func update_animation():
 		anim_sprite.play("abajo")
 	elif direction == Vector2(0, -1):
 		anim_sprite.play("arriba")
+
+

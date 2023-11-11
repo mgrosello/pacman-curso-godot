@@ -7,29 +7,44 @@ var target_position_izq = Vector2()
 var target_position_der = Vector2()
 var next_tile_position = Vector2()
 var moving = false
+var death = false
+var dying = false
 
 @onready var anim_sprite = $Sprite2D/AnimationPlayer
 @onready var tile_map = get_node("/root/Juego/TileMap")
 @onready var tile_size = Vector2(tile_map.tile_set.tile_size)
-@onready var color_rect1 = get_node("/root/Juego/ColorRect1")
-@onready var color_rect2 = get_node("/root/Juego/ColorRect2")
-@onready var color_rect3 = get_node("/root/Juego/ColorRect3")
-@onready var color_rect4 = get_node("/root/Juego/ColorRect4")
-@onready var color_rect5 = get_node("/root/Juego/ColorRect5")
-@onready var color_rect6 = get_node("/root/Juego/ColorRect6")
 @onready var siren_1Sound = get_node("/root/Juego/Siren_1Sound") 
 @onready var munch_1Sound = get_node("/root/Juego/Munch_1Sound") 
 @onready var munch_2Sound = get_node("/root/Juego/Munch_2Sound") 
+@onready var death_1Sound = get_node("/root/Juego/Death_1Sound")
+
+@onready var fantasma_rojo = get_node("/root/Juego/FantasmaRojo")
+@onready var fantasma_azul = get_node("/root/Juego/FantasmaAzul")
+@onready var fantasma_rosa = get_node("/root/Juego/FantasmaRosa")
+@onready var fantasma_naranja = get_node("/root/Juego/FantasmaNaranja")
+
 
 func _ready():
 	anim_sprite.play("idle")	
 	anim_sprite.stop()
 	siren_1Sound.play()
+	#anim_sprite.play("muerte")	
+	#death_1Sound.play()
 
 func _process(delta):
-	handle_input()
-	if moving:
-		move_to_next_tile(delta)
+	if death:
+		if !dying:
+			anim_sprite.play("muerte")	
+			death_1Sound.play()
+		fantasma_rojo.visible = false
+		fantasma_azul.visible = false
+		fantasma_rosa.visible = false
+		fantasma_naranja.visible = false
+		dying = true
+	else:
+		handle_input()
+		if moving:
+			move_to_next_tile(delta)
 
 #	color_rect4.position = position
 		
@@ -88,6 +103,10 @@ func move_to_next_tile(delta):
 	elif position.x >= 220:
 		position.x = 8
 		
+	# Detectar colision con fantasmas
+	if is_collision(fantasma_rojo) || is_collision(fantasma_azul) || is_collision(fantasma_naranja) || is_collision(fantasma_rosa):
+		death = true
+		
 func cell_id_from_pos(pos: Vector2):
 	var cell_coords = tile_map.local_to_map(tile_map.to_local(pos))
 	var cell_id = tile_map.get_cell_atlas_coords(0, cell_coords)
@@ -123,6 +142,12 @@ func update_animation():
 			anim_sprite.play("arriba")
 	else:
 		anim_sprite.pause()
+		
+func is_collision(sprite: CharacterBody2D):
+	if abs(position.x - sprite.position.x) < 3 && abs(position.y - sprite.position.y) < 3:
+		return true
+	else:
+		return false	
 		
 #func highlight_cell(rect: ColorRect, pos: Vector2):
 #	var cell_coords = tile_map.local_to_map(tile_map.to_local(pos))
