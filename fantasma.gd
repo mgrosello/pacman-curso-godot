@@ -16,9 +16,6 @@ func _ready():
 	direction = Vector2(-1, 0)
 	next_tile_position = position + direction * tile_size
 	
-func _draw():
-	$Sprite2D.frame_coords.y = color		
-	
 func _process(delta):
 	if moving:
 		move_to_next_tile(delta)
@@ -95,12 +92,12 @@ func is_wall(pos: Vector2):
 # Función para actualizar la animación basada en la dirección
 func update_animation():
 	if direction == Vector2(1, 0):
-		anim_sprite.play("derecha")
+		anim_sprite.play("derecha_" + str(color))
 	elif direction == Vector2(-1, 0):
-		anim_sprite.play("izquierda")
+		anim_sprite.play("izquierda_" + str(color))
 	elif direction == Vector2(0, 1):
-		anim_sprite.play("abajo")
+		anim_sprite.play("abajo_" + str(color))
 	elif direction == Vector2(0, -1):
-		anim_sprite.play("arriba")
+		anim_sprite.play("arriba_" + str(color))
 
 
