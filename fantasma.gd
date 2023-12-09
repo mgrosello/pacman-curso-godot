@@ -11,6 +11,7 @@ var next_tile_position = Vector2()
 
 @export var color = 0
 @export var moving = true
+@export var scared = false
 
 func _ready():
 	direction = Vector2(-1, 0)
@@ -21,7 +22,7 @@ func _process(delta):
 		move_to_next_tile(delta)
 	else:
 		handle_movement()
-	$Sprite2D.frame_coords.y = color
+	#$Sprite2D.frame_coords.y = color
 	
 func handle_movement():
 	var random_index = randi() % 4
@@ -91,7 +92,9 @@ func is_wall(pos: Vector2):
 
 # Función para actualizar la animación basada en la dirección
 func update_animation():
-	if direction == Vector2(1, 0):
+	if scared:
+		anim_sprite.play("aterrorizado")
+	elif direction == Vector2(1, 0):
 		anim_sprite.play("derecha_" + str(color))
 	elif direction == Vector2(-1, 0):
 		anim_sprite.play("izquierda_" + str(color))

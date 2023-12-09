@@ -9,6 +9,8 @@ var next_tile_position = Vector2()
 var moving = false
 var death = false
 var dying = false
+var elapsed_time_dots = 0 
+var timer_duration_dots = 0.2 
 
 @onready var anim_sprite = $Sprite2D/AnimationPlayer
 @onready var tile_map = get_node("/root/Juego/TileMap")
@@ -45,6 +47,32 @@ func _process(delta):
 		handle_input()
 		if moving:
 			move_to_next_tile(delta)
+	update_dots(delta)
+	
+func update_dots(delta):
+	elapsed_time_dots += delta
+	if elapsed_time_dots >= timer_duration_dots:
+		elapsed_time_dots = 0
+		for x in range(tile_map.get_used_rect().size.x):
+			for y in range(tile_map.get_used_rect().size.y):
+				var is_dot = false
+				var pos = Vector2i(x, y)
+				var cell_id = tile_map.get_cell_atlas_coords(0, pos)
+				if cell_id == Vector2i(15,2):
+					cell_id = Vector2i(14,2)
+					is_dot = true
+				elif cell_id == Vector2i(14,2):
+					cell_id = Vector2i(15,2)
+					is_dot = true
+				if is_dot:
+					tile_map.set_cell(0, pos, 0, cell_id)
+					var global_pos = tile_map.map_to_local(pos)
+					if is_collision_in_pos(global_pos):
+						fantasma_rojo.scared = true
+						fantasma_azul.scared = true
+						fantasma_rosa.scared = true
+						fantasma_naranja.scared = true
+
 
 #	color_rect4.position = position
 		
@@ -144,7 +172,10 @@ func update_animation():
 		anim_sprite.pause()
 		
 func is_collision(sprite: CharacterBody2D):
-	if abs(position.x - sprite.position.x) < 3 && abs(position.y - sprite.position.y) < 3:
+	return is_collision_in_pos(sprite.position)
+
+func is_collision_in_pos(pos: Vector2i):
+	if abs(position.x - pos.x) < 3 && abs(position.y - pos.y) < 3:
 		return true
 	else:
 		return false	

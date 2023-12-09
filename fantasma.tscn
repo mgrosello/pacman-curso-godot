@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://db25gtj1ejm4a"]
+[gd_scene load_steps=23 format=3 uid="uid://db25gtj1ejm4a"]
 
 [ext_resource type="Script" path="res://fantasma.gd" id="1_ekuc7"]
 [ext_resource type="Texture2D" uid="uid://b346juok6j6qk" path="res://assets/fantasmas.png" id="2_2kxq7"]
@@ -35,60 +35,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [Vector2i(6, 0), Vector2i(7, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_olpe6"]
-resource_name = "arriba"
-length = 0.200002
-loop_mode = 1
-step = 0.0166667
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame_coords")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [Vector2i(4, 0), Vector2i(5, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_w63mw"]
-resource_name = "derecha"
-length = 0.200002
-loop_mode = 1
-step = 0.0166667
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame_coords")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [Vector2i(0, 0), Vector2i(1, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_m77s0"]
-resource_name = "izquierda"
-length = 0.173914
-loop_mode = 1
-step = 0.0144928
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame_coords")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0869565),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [Vector2i(2, 0), Vector2i(3, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_j00o8"]
@@ -145,6 +91,24 @@ tracks/0/keys = {
 "values": [Vector2i(6, 3), Vector2i(7, 3)]
 }
 
+[sub_resource type="Animation" id="Animation_olpe6"]
+resource_name = "arriba"
+length = 0.200002
+loop_mode = 1
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2i(4, 0), Vector2i(5, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_vptvc"]
 resource_name = "arriba_1"
 length = 0.200002
@@ -197,6 +161,24 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [Vector2i(4, 3), Vector2i(5, 3)]
+}
+
+[sub_resource type="Animation" id="Animation_w63mw"]
+resource_name = "derecha"
+length = 0.200002
+loop_mode = 1
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2i(0, 0), Vector2i(1, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_3le8j"]
@@ -253,6 +235,24 @@ tracks/0/keys = {
 "values": [Vector2i(0, 3), Vector2i(1, 3)]
 }
 
+[sub_resource type="Animation" id="Animation_m77s0"]
+resource_name = "izquierda"
+length = 0.173914
+loop_mode = 1
+step = 0.0144928
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0869565),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2i(2, 0), Vector2i(3, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_tnmcd"]
 resource_name = "izquierda_1"
 length = 0.173914
@@ -307,6 +307,42 @@ tracks/0/keys = {
 "values": [Vector2i(2, 3), Vector2i(3, 3)]
 }
 
+[sub_resource type="Animation" id="Animation_sq82l"]
+resource_name = "aterrorizado"
+length = 0.200002
+loop_mode = 1
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2i(8, 0), Vector2i(9, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_upm0b"]
+resource_name = "aterrorizado2"
+length = 1.0
+loop_mode = 1
+step = 0.0416667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(8, 0), Vector2i(9, 0), Vector2i(10, 0), Vector2i(11, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_v2e2x"]
 _data = {
 "RESET": SubResource("Animation_4avqe"),
@@ -318,6 +354,8 @@ _data = {
 "arriba_1": SubResource("Animation_vptvc"),
 "arriba_2": SubResource("Animation_3het3"),
 "arriba_3": SubResource("Animation_yvibi"),
+"aterrorizado": SubResource("Animation_sq82l"),
+"aterrorizado2": SubResource("Animation_upm0b"),
 "derecha_0": SubResource("Animation_w63mw"),
 "derecha_1": SubResource("Animation_3le8j"),
 "derecha_2": SubResource("Animation_hs3g4"),
