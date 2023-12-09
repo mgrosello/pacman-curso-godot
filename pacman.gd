@@ -9,6 +9,7 @@ var next_tile_position = Vector2()
 var moving = false
 var death = false
 var dying = false
+var eating_ghosts = false
 var elapsed_time_dots = 0 
 var timer_duration_dots = 0.2 
 
@@ -25,6 +26,7 @@ var timer_duration_dots = 0.2
 @onready var fantasma_rosa = get_node("/root/Juego/FantasmaRosa")
 @onready var fantasma_naranja = get_node("/root/Juego/FantasmaNaranja")
 
+@onready var puntos = get_node("/root/Juego/Puntos")
 
 func _ready():
 	anim_sprite.play("idle")	
@@ -67,7 +69,9 @@ func update_dots(delta):
 				if is_dot:
 					tile_map.set_cell(0, pos, 0, cell_id)
 					var global_pos = tile_map.map_to_local(pos)
-					if is_collision_in_pos(global_pos):
+					if is_collision_in_pos(global_pos, 6):
+						eating_ghosts = true
+						tile_map.set_cell(0, pos, 0, Vector2i(12,2))
 						fantasma_rojo.scared = true
 						fantasma_azul.scared = true
 						fantasma_rosa.scared = true
@@ -133,7 +137,11 @@ func move_to_next_tile(delta):
 		
 	# Detectar colision con fantasmas
 	if is_collision(fantasma_rojo) || is_collision(fantasma_azul) || is_collision(fantasma_naranja) || is_collision(fantasma_rosa):
-		death = true
+		if eating_ghosts:
+			var i = 0
+			#puntos.position = position
+		else:
+			death = true
 		
 func cell_id_from_pos(pos: Vector2):
 	var cell_coords = tile_map.local_to_map(tile_map.to_local(pos))
@@ -172,10 +180,10 @@ func update_animation():
 		anim_sprite.pause()
 		
 func is_collision(sprite: CharacterBody2D):
-	return is_collision_in_pos(sprite.position)
+	return is_collision_in_pos(sprite.position, 3)
 
-func is_collision_in_pos(pos: Vector2i):
-	if abs(position.x - pos.x) < 3 && abs(position.y - pos.y) < 3:
+func is_collision_in_pos(pos: Vector2i, size: int):
+	if abs(position.x - pos.x) < size && abs(position.y - pos.y) < size:
 		return true
 	else:
 		return false	

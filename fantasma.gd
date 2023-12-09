@@ -22,6 +22,8 @@ func _process(delta):
 		move_to_next_tile(delta)
 	else:
 		handle_movement()
+		
+	update_animation()
 	#$Sprite2D.frame_coords.y = color
 	
 func handle_movement():
@@ -51,7 +53,7 @@ func handle_movement():
 			next_tile_position = candidate_next_tile_position
 			#print("position ", position); 
 
-	update_animation()
+
 	
 func move_to_next_tile(delta):
 	var next_position = position + direction * speed * delta
