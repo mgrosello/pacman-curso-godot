@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://b2pekacyxy7ay"]
+[gd_scene load_steps=21 format=3 uid="uid://b2pekacyxy7ay"]
 
 [ext_resource type="Texture2D" uid="uid://co2c7n8hayswl" path="res://assets/mapa.png" id="1_4leqd"]
 [ext_resource type="PackedScene" uid="uid://b8govo71ehomm" path="res://tile_map.tscn" id="1_6xgc6"]
@@ -8,6 +8,9 @@
 [ext_resource type="AudioStream" uid="uid://cp4e48ok0xxkn" path="res://sounds/munch_1.wav" id="5_j4mjm"]
 [ext_resource type="AudioStream" uid="uid://dikepn6y4qkty" path="res://sounds/munch_2.wav" id="6_y8ybh"]
 [ext_resource type="AudioStream" uid="uid://cjon124d6ahr7" path="res://sounds/death_1.wav" id="8_ilo8f"]
+[ext_resource type="Texture2D" uid="uid://crpkdpt0qiwme" path="res://assets/puntos.png" id="9_kp2sp"]
+[ext_resource type="AudioStream" uid="uid://nsiw6no1hihu" path="res://sounds/eat_ghost.wav" id="10_mrkmq"]
+[ext_resource type="AudioStream" uid="uid://be6a3x4pa8rpf" path="res://sounds/power_pellet.wav" id="11_1201w"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_dpmvt"]
 load_path = "res://.godot/imported/pacman.png-568cea45037b84aba3adf77cc6dbb1ad.ctex"
@@ -184,6 +187,13 @@ color = 2
 position = Vector2(145, 108)
 color = 1
 
+[node name="Puntos" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(273, 22)
+texture = ExtResource("9_kp2sp")
+centered = false
+hframes = 4
+
 [node name="Siren_1Sound" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(0, 16)
 stream = ExtResource("4_d087u")
@@ -196,3 +206,9 @@ stream = ExtResource("6_y8ybh")
 
 [node name="Death_1Sound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_ilo8f")
+
+[node name="Eat_Ghost" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_mrkmq")
+
+[node name="Power_Pellet" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_1201w")

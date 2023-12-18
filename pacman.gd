@@ -10,6 +10,9 @@ var moving = false
 var death = false
 var dying = false
 var eating_ghosts = false
+var ghost_eaten = 0
+var elapsed_time_puntos = 0.0
+var timer_duration_puntos = 1.0
 var elapsed_time_dots = 0 
 var timer_duration_dots = 0.2 
 
@@ -20,6 +23,8 @@ var timer_duration_dots = 0.2
 @onready var munch_1Sound = get_node("/root/Juego/Munch_1Sound") 
 @onready var munch_2Sound = get_node("/root/Juego/Munch_2Sound") 
 @onready var death_1Sound = get_node("/root/Juego/Death_1Sound")
+@onready var eat_ghost = get_node("/root/Juego/Eat_Ghost")
+@onready var power_pellet = get_node("/root/Juego/Power_Pellet")
 
 @onready var fantasma_rojo = get_node("/root/Juego/FantasmaRojo")
 @onready var fantasma_azul = get_node("/root/Juego/FantasmaAzul")
@@ -71,12 +76,18 @@ func update_dots(delta):
 					var global_pos = tile_map.map_to_local(pos)
 					if is_collision_in_pos(global_pos, 6):
 						eating_ghosts = true
+						#ghost_eaten = 0
+						siren_1Sound.stop()
+						power_pellet.play()
 						tile_map.set_cell(0, pos, 0, Vector2i(12,2))
 						fantasma_rojo.scared = true
 						fantasma_azul.scared = true
 						fantasma_rosa.scared = true
 						fantasma_naranja.scared = true
-
+	#if eating_ghosts:
+	#	elapsed_time_puntos += delta
+	#	if elapsed_time_puntos >= timer_duration_puntos:
+	#		puntos.position.x = 400		
 
 #	color_rect4.position = position
 		
@@ -136,10 +147,23 @@ func move_to_next_tile(delta):
 		position.x = 8
 		
 	# Detectar colision con fantasmas
-	if is_collision(fantasma_rojo) || is_collision(fantasma_azul) || is_collision(fantasma_naranja) || is_collision(fantasma_rosa):
+	var fantasma: CharacterBody2D
+	if is_collision(fantasma_rojo):
+		fantasma = fantasma_rojo
+	elif is_collision(fantasma_azul):
+		fantasma = fantasma_azul
+	elif is_collision(fantasma_naranja):
+		fantasma = fantasma_naranja
+	elif is_collision(fantasma_rosa):
+		fantasma = fantasma_rosa
+	if fantasma:
 		if eating_ghosts:
-			var i = 0
-			#puntos.position = position
+			fantasma.dead = true
+			eat_ghost.play()
+			puntos.position.x = int(fantasma.position.x - 8)
+			puntos.position.y = int(fantasma.position.y - 4)
+			puntos.frame_coords.x = ghost_eaten
+			ghost_eaten += 1
 		else:
 			death = true
 		

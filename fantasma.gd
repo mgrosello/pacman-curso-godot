@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 var speed = 60  # Velocidad de Pac-Man
+var speed_scared = 40
 var direction = Vector2()  
 var next_tile_position = Vector2()
 
@@ -12,13 +13,16 @@ var next_tile_position = Vector2()
 @export var color = 0
 @export var moving = true
 @export var scared = false
+@export var dead = false
 
 func _ready():
 	direction = Vector2(-1, 0)
 	next_tile_position = position + direction * tile_size
 	
 func _process(delta):
-	if moving:
+	if dead:
+		position.x = 400
+	elif moving:
 		move_to_next_tile(delta)
 	else:
 		handle_movement()
@@ -56,10 +60,13 @@ func handle_movement():
 
 	
 func move_to_next_tile(delta):
-	var next_position = position + direction * speed * delta
+	var actual_speed = speed
+	if scared:
+		actual_speed = speed_scared
+	var next_position = position + direction * actual_speed * delta
 	var distance_to_next_tile = next_tile_position - position
 #	print("distance_to_next_tile", distance_to_next_tile)	
-	if distance_to_next_tile.length() <= speed * (delta + 1):
+	if distance_to_next_tile.length() <= actual_speed * (delta + 1):
 		next_tile_position = position + direction * tile_size * 0.5
 
 		if (is_wall(next_position) || is_wall(next_tile_position)):
